@@ -14,7 +14,7 @@ typedef struct arrayStack{
     int tem; // this is for push's tem value,then all functions can use the Func type
 }ArrayStack;
 
-typedef int (*Func_1)(ArrayStack *stack);
+typedef int (*Func_1)(ArrayStack *stack); 
 
 typedef struct {
     const char *name;  
