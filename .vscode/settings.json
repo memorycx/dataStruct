@@ -9,6 +9,8 @@
     "utility.h": "c",
     "array_utility.h": "c",
     "cmath": "c",
-    "array": "c"
+    "array": "c",
+    "arrayqueue.h": "c",
+    "link_queue.h": "c"
   }
 }

@@ -2,45 +2,45 @@
 #include"./array_utility.h"
 
 
-int initStack(ArrayStack *stack){
-    stack->data = (int*)malloc(MAX_SIZE * sizeof(int));
-    if(stack->data == NULL) return REEOR;
-    stack->index = -1;
-    stack->capacity = MAX_SIZE;
+int init_queue(Array *queue){
+    queue->data = (int*)malloc(MAX_SIZE * sizeof(int));
+    if(queue->data == NULL) return REEOR;
+    queue->index = -1;
+    queue->capacity = MAX_SIZE;
     return OK;
 }
 
-int expansion_stack(ArrayStack *stack){
-    if(expansion(stack->data, &stack->capacity) == REEOR) return REEOR;
+int expansion_queue(Array *queue){
+    if(expansion(queue->data, &queue->capacity) == REEOR) return REEOR;
     return OK;
 }
 
 
-int enqueue(ArrayStack *stack){
-    int tem = add(stack->data, &stack->index, stack->tem, stack->index + 1);
+int enqueue(Array *queue){
+    int tem = add(queue->data, &queue->index, queue->tem, queue->index + 1);
     if(tem == REEOR) return REEOR;
     return OK;
 }
 
-int dequeue(ArrayStack *stack){
-    if(delete(stack->data, &stack->index, 0) == REEOR) return REEOR;
+int dequeue(Array *queue){
+    if(delete(queue->data, &queue->index, 0) == REEOR) return REEOR;
     return OK;
 }
 
-int show(ArrayStack *stack){
-    for(int i = stack->index; i >= 0; i--){
-        printf("%d->", stack->data[i]);
+int show(Array *queue){
+    for(int i = queue->index; i >= 0; i--){
+        printf("%d->", queue->data[i]);
     }
     printf("\n");
     return OK;
 }
 
-int peek(ArrayStack *stack){
-  if(stack->index == -1){
-    printf("error: stack is empty\n");
+int peek(Array *queue){
+  if(queue->index == -1){
+    printf("error: queue is empty\n");
     return 0;
   }
-  printf("%d\n", stack->data[stack->index]);
+  printf("%d\n", queue->data[queue->index]);
   return 1;
 }
 
@@ -67,8 +67,8 @@ int main(int argc, char const *argv[]){
         printf("error: not enough arguments\n");
         return 1;
     }
-    ArrayStack stack;
-    initStack(&stack);
+    Array queue;
+    init_queue(&queue);
 
 
     // git data from tem.txt and push into ArraStack
@@ -85,8 +85,8 @@ int main(int argc, char const *argv[]){
         char *token = strtok(line, " ");
         while (token != NULL) {
           int num = atoi(token);    
-          stack.tem = num;
-          enqueue(&stack);
+          queue.tem = num;
+          enqueue(&queue);
           token = strtok(NULL, " ");  
         }
         status = 0;
@@ -104,16 +104,16 @@ int main(int argc, char const *argv[]){
     printf("command: %s\n", commands[num].name);
     if(num == 2){
       for(int i = 2;i < argc;i++){
-        stack.tem = atoi(argv[i]);
-        commands[num].func(&stack); // execute the command function
+        queue.tem = atoi(argv[i]);
+        commands[num].func(&queue); // execute the command function
       }
     }else{
-      commands[num].func(&stack); 
+      commands[num].func(&queue); 
     }
 
     char* new_content = (char*)malloc(256 * sizeof(char));
     new_content[0] = '\0';
-    save_array(stack.data, stack.index + 1, new_content,0);
+    save_array(queue.data, queue.index + 1, new_content,0);
 
 
     if(num == 2 || num == 3){

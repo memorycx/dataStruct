@@ -3,7 +3,7 @@ CFLAGS := -Wall -Wextra -g
 
 # 获取所有 .c 文件（排除带 main 的文件）
 SRCS := $(wildcard *.c)
-MAIN_SRCS := cli.c arrayStack.c arrayQueue.c# 明确列出包含 main 的文件
+MAIN_SRCS := cli.c stack.c queue.c tree.c# 明确列出包含 main 的文件
 SHARED_SRCS := $(filter-out $(MAIN_SRCS), $(SRCS))
 
 # 生成对应的可执行文件

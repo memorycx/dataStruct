@@ -2,7 +2,7 @@
 #include"./array_utility.h"
 
 
-int initStack(ArrayStack *stack){
+int initStack(Array *stack){
     stack->data = (int*)malloc(MAX_SIZE * sizeof(int));
     if(stack->data == NULL) return REEOR;
     stack->index = -1;
@@ -10,24 +10,24 @@ int initStack(ArrayStack *stack){
     return OK;
 }
 
-int expansion_stack(ArrayStack *stack){
+int expansion_stack(Array *stack){
     if(expansion(stack->data, &stack->capacity) == REEOR) return REEOR;
     return OK;
 }
 
 
-int push(ArrayStack *stack){
+int push(Array *stack){
     int tem = add(stack->data, &stack->index, stack->tem, stack->index + 1);
     if(tem == REEOR) return REEOR;
     return OK;
 }
 
-int pop(ArrayStack *stack){
+int pop(Array *stack){
     if(delete(stack->data, &stack->index, stack->index) == REEOR) return REEOR;
     return OK;
 }
 
-int show(ArrayStack *stack){
+int show(Array *stack){
     for(int i = stack->index; i >= 0; i--){
         printf("%d->", stack->data[i]);
     }
@@ -57,7 +57,7 @@ int main(int argc, char const *argv[]){
         printf("error: not enough arguments\n");
         return 1;
     }
-    ArrayStack stack;
+    Array stack;
     initStack(&stack);
 
 
