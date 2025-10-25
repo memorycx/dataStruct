@@ -3,7 +3,70 @@
 #include "link_queue.h"
 
 
+int find_max(Tnode* root){
+  while(root->right) root = root->right;
+  return root->data;
+}
 
+int find_min(Tnode* root){
+  while(root->left) root = root->left;
+  return root->data;
+}
+
+Tnode* delete_Tnode(Tnode* root, int data){
+  if(root == NULL) return NULL;
+  if(data < root->data) root->left = delete_Tnode(root->left, data);
+  else if(data > root->data) root->right = delete_Tnode(root->right, data);
+  else{
+    // in here we have found the node to be deleted
+
+    //case 1 : no chile
+    if(root->left == NULL && root->right == NULL){
+      free(root);
+      root = NULL;
+    }
+
+    //case 2 : one child
+    else if(root->left == NULL){
+      Tnode* temp = root;
+      root = root->right;
+      free(temp);
+    }
+
+    else if(root->right == NULL){
+      Tnode* temp = root;
+      root = root->left;
+      free(temp);
+    }
+    
+
+    //case 3 : two children
+    else{
+      // find the max value in the left subtree and replace the node's value with it
+      root->data = find_max(root->left);
+      root = delete_Tnode(root->left, root->data);
+    }
+  }
+  return root;
+}
+
+
+// 这里如果想要多重去重，需要哈希表来解决数量问题
+// 目前不支持BST中存在数据重复的情况
+char* delete_text(char *line,int size, const char *data) {
+  char *new_line = (char*)malloc(sizeof(char) * 256);
+  int j = 0;
+  for(int i = 0; i < size; i++){
+    if(line[i] != data[0]){
+      new_line[j] = line[i];
+      j++;
+    }
+
+  }
+  new_line[j] = '\0';
+  return new_line;
+
+}
 
 Tnode *insert(Tnode *root, int data){
   if(root == NULL){
@@ -120,11 +183,16 @@ int main(int argc, char const *argv[]){
   }
 
 
-
   char line[256];
+  read_file(line, 256, "tree");
 
-  read_file(line,256,"tree");
-  char *token = strtok(line, " ");
+  char tem_line[256];
+  strncpy(tem_line, line, 256);
+  line[255] = '\0';
+  tem_line[255] = '\0';
+
+  char *token = strtok(tem_line, " ");
+
   while (token != NULL) {
     int num = atoi(token);    
     root = insert(root, num);
@@ -168,6 +236,20 @@ int main(int argc, char const *argv[]){
 
   else if(strcmp(argv[1], "show") == 0){
     show(root);
+  }
+
+  else if(strcmp(argv[1], "delete") == 0){
+    printf("delete <data>\n");
+    if(argc < 3){
+      printf("error: not enough arguments\n");
+      return 1;
+    }
+    root = delete_Tnode(root, atoi(argv[2]));
+    char *new_line = delete_text(line,sizeof(line), argv[2]);
+    strcat(new_line, "\n");
+    printf("new_line: %s\n", new_line);
+    save("tree",new_line);
+    free(new_line);
   }
 
   else{
