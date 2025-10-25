@@ -11,6 +11,7 @@
     "cmath": "c",
     "array": "c",
     "arrayqueue.h": "c",
-    "link_queue.h": "c"
+    "link_queue.h": "c",
+    "initializer_list": "c"
   }
 }

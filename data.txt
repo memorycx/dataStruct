@@ -1,7 +1,7 @@
-ArrayStack
-1 2 3 4 5 
-ArrayQueue
-5 4 3 2 1 
+stack
+1 2 3 4 5 10 20 
+queue
+2 3 4 5 
 tree
-
-the end
+2 10 3 4 9 7
+end

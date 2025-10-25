@@ -9,7 +9,21 @@ int execute_command(const char *input,CommandEntry* commands) {
     return -1;
 }
 
-void save(const char *line, const char *new_content) {
+
+void read_file(char *line,int size,const char *prompt){
+    int status = 0;
+    FILE *fp = fopen("./data.txt", "r");
+    while (fgets(line, size, fp) != NULL) { 
+      line[strcspn(line, "\r\n")] = '\0';
+      if(status) break;
+      if(strcmp(line, prompt) == 0){
+        status = 1;
+      }
+    }
+    fclose(fp);
+}
+
+void save(char *line, char *new_content) {
     FILE *src = fopen("./data.txt", "r");
     FILE *tmp = fopen("temp.txt", "w");
     if (src == NULL || tmp == NULL) {

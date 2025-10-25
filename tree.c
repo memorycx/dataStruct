@@ -65,10 +65,14 @@ void inOrder(Tnode *root){
 
 
 void printTree(Tnode* node, const char* prefix, int isLast) {
-    if (!node) return;
+
 
     printf("%s", prefix);
     printf(isLast ? "└── " : "├── ");
+    if(node == NULL){
+        printf("NULL\n");
+        return;
+    }
     printf("%d\n", node->data);
 
     char* newPrefix = (char*)malloc(strlen(prefix) + 4);
@@ -83,8 +87,8 @@ void printTree(Tnode* node, const char* prefix, int isLast) {
 
 // 封装打印函数
 void show(Tnode* root) {
-  printf("每个结点下的第一个孩子是左孩子，第二个孩子是右孩子\n"
-  "each node has two child,the first is left child,the second is right child\n");
+  printf("\n\n每个结点下的第一个孩子是左孩子，第二个孩子是右孩子\n"
+  "each node has two child,the first is left child,the second is right child\n\n");
 
   if (!root) {
       printf("空树\n");
@@ -117,14 +121,28 @@ int main(int argc, char const *argv[]){
 
 
 
+  char line[256];
+
+  read_file(line,256,"tree");
+  char *token = strtok(line, " ");
+  while (token != NULL) {
+    int num = atoi(token);    
+    root = insert(root, num);
+    token = strtok(NULL, " ");  
+  }
 
   if(strcmp(argv[1], "insert") == 0){
     if(argc < 3){
       printf("error: not enough arguments\n");
       return 1;
     }
-    for(int i = 2; i < argc; i++) 
+    for(int i = 2; i < argc; i++){
       root = insert(root, atoi(argv[i]));
+      strcat(line, argv[i]);
+      strcat(line, " ");
+    }
+    strcat(line, "\n");
+    save("tree", line);
   }
 
   else if(strcmp(argv[1], "search") == 0){
@@ -157,5 +175,5 @@ int main(int argc, char const *argv[]){
     return 1;
   }
 
-
+  return 0;
 }

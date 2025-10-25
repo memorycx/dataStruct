@@ -18,30 +18,27 @@ int add(int* array,int* size ,int value, int index){
     return OK;
 }
 
-int delete(int* array,int* size,int index){
-    if((*size) == 0 || index >= (*size)) return REEOR;
-    for(int i = index; i < (*size) - 1; i++){
-        array[i] = array[i+1];
-    }
-    (*size)--;
-    return OK;
+int delete(int* array,int size,int index){
+  size += 1;
+  if(size == 0 || index >= size) return REEOR;
+  for(int i = index; i < size; i++){
+      array[i] = array[i+1];
+  }
+  return OK;
 }
 
-void save_array(int* array,int size,char* str,int sort){
-  if(sort){
-    for(int i = 0; i<= size - 1; i++){
-      char temp[20];
-      snprintf(temp, sizeof(temp), "%d ", array[i]);
-      strncat(str, temp, 256 - strlen(str) - 1);
-    }
-    strcat(str, "\n");
-  }else{
-    for(int i = size - 1; i>=0; i--){
-      char temp[20];
-      snprintf(temp, sizeof(temp), "%d ", array[i]);
-      strncat(str, temp, 256 - strlen(str) - 1);
-    }
-    strcat(str, "\n");
+void save_array(int* array,int size,char*command){
 
+
+  char* new_content = (char*)malloc(256 * sizeof(char));
+  new_content[0] = '\0';
+
+  for(int i = 0; i<= size - 1; i++){
+    char temp[20];
+    snprintf(temp, sizeof(temp), "%d ", array[i]);
+    strncat(new_content, temp, 256 - strlen(new_content) - 1);
   }
+  strcat(new_content, "\n");
+
+  save(command,new_content); // save the ArraStack to tem.txt
 }

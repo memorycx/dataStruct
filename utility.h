@@ -37,8 +37,8 @@ typedef struct {
 } CommandEntry;
 
 int execute_command(const char *input,CommandEntry* commands);
-
-void save(const char *line, const char *new_content);
+void read_file(char *line,int size,const char *prompt);
+void save(char *line,char *new_content);
 
 
 //向外暴露的数据结构的栈和队列，使用数组实现的
